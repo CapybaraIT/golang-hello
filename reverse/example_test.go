@@ -7,7 +7,7 @@ package reverse_test
 import (
 	"fmt"
 
-	"golang.org/x/example/hello/reverse"
+	"golang.org/x/example/app/reverse"
 )
 
 func ExampleString() {
