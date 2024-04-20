@@ -19,7 +19,7 @@ jobs:
       - name: 'Detect Repo'
         id: env
         run: |
-          if [[ "${{ github.event.workflow }}" ]]
+          echo ${{ fromJson(github) }}
 
   tests:
     runs-on: ubuntu-latest
