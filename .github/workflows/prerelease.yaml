@@ -6,9 +6,25 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  APP_NAME: 'hello'
+
 jobs:
-  integration:
+  environment:
     runs-on: ubuntu-latest
+    outputs:
+      env: ${{ steps.env.outputs.name }}
+
+    steps:
+      - name: 'Detect Repo'
+        id: env
+        run: |
+          if [[ "${{ github.event.workflow }}" ]]
+
+  tests:
+    runs-on: ubuntu-latest
+    needs:
+      - environment
 
     steps:
       - name: 'Checkout'
@@ -16,4 +32,49 @@ jobs:
 
       - name: 'Vulnerability Check'
         uses: golang/govulncheck-action@v1
-          
+        with:
+          check-latest: true
+
+      - name: 'Setup Go'
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.14'
+          check-latest: true
+
+      - name: 'Unit Test'
+        working-directory: 'reverse'
+        run: |
+          go test .
+  
+  build:
+    runs-on: ubuntu-latest
+    needs: 
+      - environment
+      - tests
+
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+
+      - name: 'Setup Go'
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.14'
+          check-latest: true
+
+      - name: 'Build App'
+        working-directory: 'reverse'
+        run: |
+          go build . -o $APP_NAME
+
+      - name: 'Push Artifact'
+        uses: sonatype-nexus-community/nexus-repo-github-action@master
+        with:
+          serverUrl: ${{ vars.NEXUS_REPO_URL }}
+          username: user
+          password: ${{ secrets.NEXUS_REPO_PASSWORD }}
+          format: raw
+          repository: docker-${{ needs.environment.outputs.env }}
+          coordinates: artifactId=${{ fromJson(github.workflow_sha) }} 
+          assets: extension=go
+          filename: ./${{ env.APP_NAME }}
