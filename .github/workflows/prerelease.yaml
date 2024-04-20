@@ -12,10 +12,19 @@ env:
 jobs:
   environment:
     runs-on: ubuntu-latest
+    outputs:
+      env: ${{ steps.env.outputs.name }}
 
     steps:
       - name: 'Detect Repo'
-        run: echo ${{ toJson(github) }}
+        id: env
+        run: |
+          if [[ "${{ github.event_name }}" == "push" ]]
+          then
+            echo "name=dev" >> $GITHUB_OUTPUT
+          else 
+            echo "name=test" >> $GITHUB_OUTPUT
+          fi
 
   tests:
     runs-on: ubuntu-latest
