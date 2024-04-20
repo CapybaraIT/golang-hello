@@ -65,7 +65,6 @@ jobs:
           check-latest: true
 
       - name: 'Build App'
-        working-directory: 'reverse'
         run: |
           go build .
 
@@ -77,6 +76,6 @@ jobs:
           password: ${{ secrets.NEXUS_REPO_PASSWORD }}
           format: raw
           repository: docker-${{ needs.environment.outputs.env }}
-          coordinates: artifactId="app"
+          coordinates: artifactId="app" 
           assets: extension=""
           filename: app
