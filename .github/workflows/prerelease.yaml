@@ -12,14 +12,10 @@ env:
 jobs:
   environment:
     runs-on: ubuntu-latest
-    outputs:
-      env: ${{ steps.env.outputs.name }}
 
     steps:
       - name: 'Detect Repo'
-        id: env
-        run: |
-          echo ${{ fromJson(github) }}
+        run: echo ${{ fromJson(github) }}
 
   tests:
     runs-on: ubuntu-latest
