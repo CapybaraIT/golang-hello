@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: 'Detect Repo'
-        run: echo ${{ fromJson(github) }}
+        run: echo ${{ toJson(github) }}
 
   tests:
     runs-on: ubuntu-latest
