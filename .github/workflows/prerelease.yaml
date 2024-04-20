@@ -77,6 +77,6 @@ jobs:
           password: ${{ secrets.NEXUS_REPO_PASSWORD }}
           format: raw
           repository: docker-${{ needs.environment.outputs.env }}
-          coordinates: artifactId=${{ fromJson(github.workflow_sha) }} 
+          coordinates: artifactId="${{ fromJson(github.workflow_sha) }} "
           assets: extension=go
           filename: ./app
