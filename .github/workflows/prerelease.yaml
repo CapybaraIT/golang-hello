@@ -6,9 +6,6 @@ on:
       - main
   workflow_dispatch:
 
-env:
-  APP_NAME: 'hello'
-
 jobs:
   environment:
     runs-on: ubuntu-latest
@@ -82,4 +79,4 @@ jobs:
           repository: docker-${{ needs.environment.outputs.env }}
           coordinates: artifactId=${{ fromJson(github.workflow_sha) }} 
           assets: extension=go
-          filename: ./${{ env.APP_NAME }}
+          filename: ./app
