@@ -67,7 +67,7 @@ jobs:
       - name: 'Build App'
         working-directory: 'reverse'
         run: |
-          go build . -o $APP_NAME
+          go build .
 
       - name: 'Push Artifact'
         uses: sonatype-nexus-community/nexus-repo-github-action@master
