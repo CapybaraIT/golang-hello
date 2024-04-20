@@ -78,5 +78,5 @@ jobs:
           format: raw
           repository: docker-${{ needs.environment.outputs.env }}
           coordinates: artifactId="app"
-          assets: extension=go
-          filename: ./app.go
+          assets: extension=""
+          filename: ./app
