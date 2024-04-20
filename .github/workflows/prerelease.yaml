@@ -79,4 +79,4 @@ jobs:
           repository: docker-${{ needs.environment.outputs.env }}
           coordinates: artifactId="app"
           assets: extension=""
-          filename: ./app
+          filename: app
