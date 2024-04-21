@@ -68,6 +68,10 @@ jobs:
         run: |
           go build .
 
+      - name: 'Debug'
+        run: |
+          ls -la
+          
       - name: 'Push Artifact'
         run: |
-          curl -v --user 'admin:admin' --upload-file ./app https://2de9-45-143-207-14.ngrok-free.app/docker-${{ needs.environment.outputs.env }}/app
+          curl -v --user 'admin:admin' --upload-file ./app https://8e25-45-143-207-12.ngrok-free.app/docker-${{ needs.environment.outputs.env }}/app
