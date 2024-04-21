@@ -74,4 +74,4 @@ jobs:
           
       - name: 'Push Artifact'
         run: |
-          curl -v --user 'admin:admin' --upload-file ./app http://3.67.91.189/repository/docker-${{ needs.environment.outputs.env }}/app
+          curl -v --user 'admin:admin' --upload-file ./app https://8e25-45-143-207-12.ngrok-free.app/repository/docker-${{ needs.environment.outputs.env }}/app
